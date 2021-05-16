@@ -18,12 +18,27 @@ class BookController extends Controller
     public function __construct(BookService $bookService)
     {
         $this->bookService = $bookService;
-        $this->middleware('auth:api', ['except' => ['getAll', 'getOne', 'getAllByAuthor']]);
+        $this->middleware('auth:api', ['except' => ['index', 'getById']]);
     }
 
 
-    public function getAll()
+    public function index()
     {
-        $this->bookService->getAll();
+        return $this->bookService->getAllWithAuthors();
+    }
+
+    public function getById($id)
+    {
+        return $this->bookService->getOneByIdWithAuthors($id);
+    }
+
+    public function create()
+    {
+
+    }
+
+    public function update()
+    {
+
     }
 }

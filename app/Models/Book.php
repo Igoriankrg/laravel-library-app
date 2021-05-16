@@ -19,4 +19,20 @@ class Book extends Model
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'pivot',
+        'created_at',
+        'updated_at',
+    ];
+
+    public function authors()
+    {
+        return $this->belongsToMany(Author::class, 'book_author');
+    }
 }

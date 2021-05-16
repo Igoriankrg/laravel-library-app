@@ -13,7 +13,21 @@ class BookRepository implements BookRepositoryInterface
 
     public function findAll()
     {
-        $result = $this->model::with('author')->get();
-        return $result;
+        return $this->model::get();
+    }
+
+    public function findAllWithAuthors()
+    {
+        return $this->model::with('authors')->get();
+    }
+
+    public function findOneById(int $id)
+    {
+        return $this->model::find($id);
+    }
+
+    public function findOneByIdWithAuthors(int $id)
+    {
+        return $this->model::with('authors')->find($id);
     }
 }
