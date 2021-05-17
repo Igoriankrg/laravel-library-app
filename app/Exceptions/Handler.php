@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Illuminate\Validation\UnauthorizedException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -42,7 +44,10 @@ class Handler extends ExceptionHandler
 
     public function render($request, \Throwable $e)
     {
-        return JsonResponse::fromJsonString(json_encode(['error' => $e->getMessage()]), $e->status);
+        if ($e instanceof UnauthorizedException) {
+            return JsonResponse::fromJsonString(json_encode(['error' => 'Unauthorized']), Response::HTTP_UNAUTHORIZED);
+        }
+        return JsonResponse::fromJsonString(json_encode(['error' => $e->getMessage()]), Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
 }

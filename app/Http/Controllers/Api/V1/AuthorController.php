@@ -15,6 +15,7 @@ class AuthorController extends Controller
     public function __construct(AuthorServiceInterface $authorService)
     {
         $this->authorService = $authorService;
+        $this->middleware('auth:api');
     }
 
     public function create(AuthorPostRequest $request)
