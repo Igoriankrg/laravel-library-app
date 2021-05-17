@@ -4,8 +4,16 @@
 namespace App\Services;
 
 
-class BookService extends AbstractService
+use App\Repositories\Interfaces\BookRepositoryInterface;
+use App\Services\Interfaces\BookServiceInterface;
+
+class BookService extends Service implements BookServiceInterface
 {
+    public function __construct(BookRepositoryInterface $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function getAll()
     {
         return $this->repository->findAll();
@@ -24,5 +32,10 @@ class BookService extends AbstractService
     public function getOneByIdWithAuthors(int $id)
     {
         return $this->repository->findOneByIdWithAuthors($id);
+    }
+
+    public function getAllByIds(array $ids)
+    {
+        return $this->repository->findAllByIds($ids);
     }
 }

@@ -4,9 +4,9 @@
 namespace App\Repositories\Ar;
 
 
-use App\Repositories\Interfaces\RepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 
-class UserRepository implements RepositoryInterface
+class UserRepository implements UserRepositoryInterface
 {
 
 }

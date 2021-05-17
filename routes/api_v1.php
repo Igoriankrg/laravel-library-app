@@ -8,5 +8,5 @@ Route::post('auth/logout', 'AuthController@logout');
 Route::post('auth/refresh', 'AuthController@refresh');
 Route::post('auth/me', 'AuthController@me');
 
-Route::get('book', 'BookController@index');
-Route::get('book/{id}', 'BookController@getById');
+Route::get('books', 'BookController@index');
+Route::get('books/{id}', 'BookController@getById');

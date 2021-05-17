@@ -30,4 +30,9 @@ class BookRepository implements BookRepositoryInterface
     {
         return $this->model::with('authors')->find($id);
     }
+
+    public function findAllByIds(array $ids)
+    {
+        return $this->model::find($ids);
+    }
 }

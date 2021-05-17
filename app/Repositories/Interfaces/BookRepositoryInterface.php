@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Interfaces;
 
-interface BookRepositoryInterface extends RepositoryInterface {
+interface BookRepositoryInterface extends RepositoryInterface
+{
 
 }
