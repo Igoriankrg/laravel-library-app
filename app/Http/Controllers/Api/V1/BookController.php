@@ -7,33 +7,29 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookPostRequest;
 use App\Http\Requests\BookPutRequest;
-use App\Services\Interfaces\AuthorServiceInterface;
-use App\Services\Interfaces\BookAuthorServiceInterface;
 use App\Services\Interfaces\BookServiceInterface;
+use App\Services\Interfaces\BookStoreInterface;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
     protected $bookService;
-    protected $bookAuthorService;
-    protected $authorService;
+    protected $bookStoreService;
 
     /**
      * Create a new BookController instance.
      *
      * @param BookServiceInterface $bookService
-     * @param BookAuthorServiceInterface $bookAuthorService
-     * @param AuthorServiceInterface $authorService
+     * @param BookStoreInterface $bookStoreService
      */
     public function __construct(
         BookServiceInterface $bookService,
-        BookAuthorServiceInterface $bookAuthorService,
-        AuthorServiceInterface $authorService
+        BookStoreInterface $bookStoreService
     )
     {
         $this->bookService = $bookService;
-        $this->bookAuthorService = $bookAuthorService;
-        $this->authorService = $authorService;
+        $this->bookStoreService = $bookStoreService;
+
         $this->middleware('auth:api', ['except' => ['index', 'getById']]);
     }
 
@@ -84,6 +80,8 @@ class BookController extends Controller
      *        ),
      *    ),
      * )
+     * @param Request $request
+     * @return mixed
      */
     public function index(Request $request)
     {
@@ -132,6 +130,8 @@ class BookController extends Controller
      *        ),
      *    ),
      * )
+     * @param $id
+     * @return mixed
      */
     public function getById($id)
     {
@@ -201,13 +201,12 @@ class BookController extends Controller
      *         {"jwt_token": "token example"}
      *     }
      * )
+     * @param BookPostRequest $request
+     * @return mixed
      */
     public function create(BookPostRequest $request)
     {
-        $book = $this->bookService->create(['name' => $request->post('name')]);
-        $this->bookAuthorService->createMultiple($book->getAttribute('id'), $request->post('authors'));
-        $book['authors'] = $this->authorService->getAllByIds($request->post('authors'));
-        return $book;
+        return $this->bookStoreService->create($request->post());
     }
 
     /**
@@ -273,13 +272,12 @@ class BookController extends Controller
      *         {"jwt_token": "token example"}
      *     }
      * )
+     * @param $id
+     * @param BookPutRequest $request
+     * @return mixed
      */
     public function update($id, BookPutRequest $request)
     {
-        $book = $this->bookService->update($id, ['name' => $request->post('name')]);
-        $this->bookAuthorService->deleteAllByBookId($id);
-        $this->bookAuthorService->createMultiple($id, $request->post('authors'));
-        $book['authors'] = $this->authorService->getAllByIds($request->post('authors'));
-        return $book;
+        return $this->bookStoreService->update($id, $request->post());
     }
 }

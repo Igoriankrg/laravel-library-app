@@ -9,9 +9,11 @@ use App\Repositories\Ar\UserRepository;
 use App\Services\AuthorService;
 use App\Services\BookAuthorService;
 use App\Services\BookService;
+use App\Services\BookStoreService;
 use App\Services\Interfaces\AuthorServiceInterface;
 use App\Services\Interfaces\BookAuthorServiceInterface;
 use App\Services\Interfaces\BookServiceInterface;
+use App\Services\Interfaces\BookStoreInterface;
 use App\Services\Interfaces\UserServiceInterface;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
@@ -45,6 +47,14 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(AuthorServiceInterface::class, function () {
             return new AuthorService(
+                $this->app->get(AuthorRepository::class)
+            );
+        });
+
+        $this->app->bind(BookStoreInterface::class, function() {
+            return new BookStoreService(
+                $this->app->get(BookRepository::class),
+                $this->app->get(BookAuthorRepository::class),
                 $this->app->get(AuthorRepository::class)
             );
         });

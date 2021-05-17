@@ -61,6 +61,8 @@ class AuthorController extends Controller
      *          {"jwt_token": "token example"}
      *     }
      * )
+     * @param AuthorPostRequest $request
+     * @return mixed
      */
     public function create(AuthorPostRequest $request)
     {

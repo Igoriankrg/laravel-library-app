@@ -34,4 +34,16 @@ class BookAuthorRepository implements BookAuthorRepositoryInterface
         }
         return true;
     }
+
+    public function createMultiple(int $bookId, array $authorIds): array
+    {
+        $bookAuthorArray = [];
+        foreach ($authorIds as $authorId) {
+            $bookAuthorArray[] = $this->create([
+                'book_id' => $bookId,
+                'author_id' => $authorId,
+            ]);
+        }
+        return $bookAuthorArray;
+    }
 }
