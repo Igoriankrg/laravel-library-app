@@ -46,7 +46,7 @@ class BookAuthorService extends Service implements BookAuthorServiceInterface
         return $bookAuthorArray;
     }
 
-    public function deleteAllByBookId(int $id)
+    public function deleteAllByBookId(int $id): bool
     {
         return $this->repository->deleteAllByBookId($id);
     }

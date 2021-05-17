@@ -37,7 +37,6 @@ class BookController extends Controller
         $this->middleware('auth:api', ['except' => ['index', 'getById']]);
     }
 
-
     public function index(Request $request)
     {
         if ($request->get('author_id')) {
