@@ -2,11 +2,14 @@
 
 namespace App\Providers;
 
+use App\Repositories\Ar\AuthorRepository;
 use App\Repositories\Ar\BookAuthorRepository;
 use App\Repositories\Ar\BookRepository;
 use App\Repositories\Ar\UserRepository;
+use App\Services\AuthorService;
 use App\Services\BookAuthorService;
 use App\Services\BookService;
+use App\Services\Interfaces\AuthorServiceInterface;
 use App\Services\Interfaces\BookAuthorServiceInterface;
 use App\Services\Interfaces\BookServiceInterface;
 use App\Services\Interfaces\UserServiceInterface;
@@ -37,6 +40,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BookAuthorServiceInterface::class, function () {
             return new BookAuthorService(
                 $this->app->get(BookAuthorRepository::class)
+            );
+        });
+
+        $this->app->bind(AuthorServiceInterface::class, function () {
+            return new AuthorService(
+                $this->app->get(AuthorRepository::class)
             );
         });
     }

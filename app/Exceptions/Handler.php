@@ -3,9 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Http\JsonResponse;
 use Throwable;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Handler extends ExceptionHandler
 {
@@ -43,14 +42,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, \Throwable $e)
     {
-        if ($e instanceof NotFoundHttpException && $request->wantsJson()) {
-            return response()->json(['error' => 'Page Not Found'], 404);
-        }
-        if ($e instanceof ModelNotFoundException && $request->wantsJson()) {
-            return response()->json(['error' => 'Not Found'], 404);
-        }
-
-        return parent::render($request, $e);
+        return JsonResponse::fromJsonString(json_encode(['error' => $e->getMessage()]), $e->status);
     }
 
 }
