@@ -9,5 +9,12 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
+    /**
+     * @OA\Info(
+     *      version="1.0.0",
+     *      title="Integration Swagger in Laravel with library app",
+     *      description="Implementation of Swagger with in Laravel",
+     * )
+     */
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }

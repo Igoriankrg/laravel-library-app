@@ -17,10 +17,73 @@ class AuthController extends Controller
     }
 
     /**
-     * Get a JWT via given credentials.
+     * @OA\Post(
+     *   path="/v1/auth/login",
+     *   tags={"Auth"},
+     *   summary="Login",
+     *   operationId="login",
      *
-     * @return \Illuminate\Http\JsonResponse
-     */
+     *   @OA\Parameter(
+     *      name="email",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   @OA\Parameter(
+     *      name="password",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     *   ),
+     *    @OA\Response(
+     *        response=200,
+     *        description="Current user",
+     *        @OA\JsonContent(
+     *            type="array",
+     *            @OA\Items(
+     *               @OA\Property(
+     *                   property="access_token",
+     *                   nullable=false,
+     *                   description="Access token",
+     *                   type="string"
+     *               ),
+     *               @OA\Property(
+     *                   property="token_type",
+     *                   nullable=false,
+     *                   description="Token type",
+     *                   type="string"
+     *               ),
+     *               @OA\Property(
+     *                   property="expires_in",
+     *                   nullable=false,
+     *                   description="Amount of seconds until token expire",
+     *                   type="integer"
+     *               ),
+     *            )
+     *        ),
+     *    ),
+     *   @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      )
+     *)
+     **/
     public function login()
     {
         $credentials = request(['email', 'password']);
@@ -33,9 +96,42 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Get(
+     *    tags={"Auth"},
+     *    path="/v1/auth/me",
+     *    description="Get current user information",
+     *    summary="Return current user",
+     *    @OA\Response(
+     *        response=200,
+     *        description="Current user",
+     *        @OA\JsonContent(
+     *            type="array",
+     *            @OA\Items(
+     *               @OA\Property(
+     *                   property="access_token",
+     *                   nullable=false,
+     *                   description="Access token",
+     *                   type="string"
+     *               ),
+     *               @OA\Property(
+     *                   property="token_type",
+     *                   nullable=false,
+     *                   description="Token type",
+     *                   type="string"
+     *               ),
+     *               @OA\Property(
+     *                   property="expires_in",
+     *                   nullable=false,
+     *                   description="Amount of seconds until token expire",
+     *                   type="integer"
+     *               ),
+     *            )
+     *        ),
+     *    ),
+     *    security={
+     *        {"jwt_token": "token example"}
+     *    }
+     * )
      */
     public function me()
     {
@@ -43,9 +139,30 @@ class AuthController extends Controller
     }
 
     /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Get(
+     *    tags={"Auth"},
+     *    path="/v1/auth/logout",
+     *    description="Logout current user",
+     *    summary="Logout current user",
+     *    @OA\Response(
+     *        response=200,
+     *        description="Information",
+     *        @OA\JsonContent(
+     *            type="array",
+     *            @OA\Items(
+     *               @OA\Property(
+     *                   property="message",
+     *                   nullable=false,
+     *                   description="Message",
+     *                   type="string"
+     *               ),
+     *            )
+     *        ),
+     *    ),
+     *    security={
+     *        {"jwt_token": "token example"}
+     *    }
+     * )
      */
     public function logout()
     {
@@ -55,9 +172,42 @@ class AuthController extends Controller
     }
 
     /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Get(
+     *    tags={"Auth"},
+     *    path="/v1/auth/refresh",
+     *    description="Refresh current user token",
+     *    summary="Refresh current user token",
+     *    @OA\Response(
+     *        response=200,
+     *        description="Current user",
+     *        @OA\JsonContent(
+     *            type="array",
+     *            @OA\Items(
+     *               @OA\Property(
+     *                   property="access_token",
+     *                   nullable=false,
+     *                   description="Access token",
+     *                   type="string"
+     *               ),
+     *               @OA\Property(
+     *                   property="token_type",
+     *                   nullable=false,
+     *                   description="Token type",
+     *                   type="string"
+     *               ),
+     *               @OA\Property(
+     *                   property="expires_in",
+     *                   nullable=false,
+     *                   description="Amount of seconds until token expire",
+     *                   type="integer"
+     *               ),
+     *            )
+     *        ),
+     *    ),
+     *    security={
+     *        {"jwt_token": "token example"}
+     *    }
+     * )
      */
     public function refresh()
     {

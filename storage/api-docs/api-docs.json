@@ -1,0 +1,527 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Integration Swagger in Laravel with library app",
+        "description": "Implementation of Swagger with in Laravel",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "operationId": "login",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Current user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "access_token": {
+                                                "description": "Access token",
+                                                "type": "string",
+                                                "nullable": false
+                                            },
+                                            "token_type": {
+                                                "description": "Token type",
+                                                "type": "string",
+                                                "nullable": false
+                                            },
+                                            "expires_in": {
+                                                "description": "Amount of seconds until token expire",
+                                                "type": "integer",
+                                                "nullable": false
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
+        "/v1/auth/me": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Return current user",
+                "description": "Get current user information",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\AuthController::me",
+                "responses": {
+                    "200": {
+                        "description": "Current user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "access_token": {
+                                                "description": "Access token",
+                                                "type": "string",
+                                                "nullable": false
+                                            },
+                                            "token_type": {
+                                                "description": "Token type",
+                                                "type": "string",
+                                                "nullable": false
+                                            },
+                                            "expires_in": {
+                                                "description": "Amount of seconds until token expire",
+                                                "type": "integer",
+                                                "nullable": false
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_token": "token example"
+                    }
+                ]
+            }
+        },
+        "/v1/auth/logout": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout current user",
+                "description": "Logout current user",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\AuthController::logout",
+                "responses": {
+                    "200": {
+                        "description": "Information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "description": "Message",
+                                                "type": "string",
+                                                "nullable": false
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_token": "token example"
+                    }
+                ]
+            }
+        },
+        "/v1/auth/refresh": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Refresh current user token",
+                "description": "Refresh current user token",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\AuthController::refresh",
+                "responses": {
+                    "200": {
+                        "description": "Current user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "access_token": {
+                                                "description": "Access token",
+                                                "type": "string",
+                                                "nullable": false
+                                            },
+                                            "token_type": {
+                                                "description": "Token type",
+                                                "type": "string",
+                                                "nullable": false
+                                            },
+                                            "expires_in": {
+                                                "description": "Amount of seconds until token expire",
+                                                "type": "integer",
+                                                "nullable": false
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_token": "token example"
+                    }
+                ]
+            }
+        },
+        "/v1/authors": {
+            "post": {
+                "tags": [
+                    "Authors"
+                ],
+                "summary": "Create author",
+                "description": "Create author",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\AuthorController::create",
+                "requestBody": {
+                    "description": "Author body",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Author name",
+                                        "type": "string",
+                                        "nullable": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Author array",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "Id",
+                                                "type": "integer",
+                                                "nullable": false
+                                            },
+                                            "name": {
+                                                "description": "Author name",
+                                                "type": "string",
+                                                "nullable": false
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_token": "token example"
+                    }
+                ]
+            }
+        },
+        "/v1/books": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Return all books",
+                "description": "Get all books",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\BookController::index",
+                "parameters": [
+                    {
+                        "name": "author_id",
+                        "in": "path",
+                        "description": "Return books by author id",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Books arrray",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "Id",
+                                                "type": "integer",
+                                                "nullable": false
+                                            },
+                                            "name": {
+                                                "description": "Book name",
+                                                "type": "string",
+                                                "nullable": false
+                                            },
+                                            "authors": {
+                                                "description": "Array of book authors",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {}
+                                                },
+                                                "nullable": false
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Create book",
+                "description": "Create book",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\BookController::create",
+                "requestBody": {
+                    "description": "Book body",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Book name",
+                                        "type": "string",
+                                        "nullable": false
+                                    },
+                                    "authors": {
+                                        "description": "Array of book authors ids",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "items": {}
+                                        },
+                                        "nullable": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Book array",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "Id",
+                                                "type": "integer",
+                                                "nullable": false
+                                            },
+                                            "name": {
+                                                "description": "Book name",
+                                                "type": "string",
+                                                "nullable": false
+                                            },
+                                            "authors": {
+                                                "description": "Array of book authors",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {}
+                                                },
+                                                "nullable": false
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_token": "token example"
+                    }
+                ]
+            }
+        },
+        "/v1/books/{id}": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Return one book",
+                "description": "Get one book by it's id",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\BookController::getById",
+                "responses": {
+                    "200": {
+                        "description": "Book array",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "Id",
+                                                "type": "integer",
+                                                "nullable": false
+                                            },
+                                            "name": {
+                                                "description": "Book name",
+                                                "type": "string",
+                                                "nullable": false
+                                            },
+                                            "authors": {
+                                                "description": "Array of book authors",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {}
+                                                },
+                                                "nullable": false
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Update book",
+                "description": "Update book",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\BookController::update",
+                "requestBody": {
+                    "description": "Book body",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Book name",
+                                        "type": "string",
+                                        "nullable": false
+                                    },
+                                    "authors": {
+                                        "description": "Array of book authors ids",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "items": {}
+                                        },
+                                        "nullable": false
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Book array",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "Id",
+                                                "type": "integer",
+                                                "nullable": false
+                                            },
+                                            "name": {
+                                                "description": "Book name",
+                                                "type": "string",
+                                                "nullable": false
+                                            },
+                                            "authors": {
+                                                "description": "Array of book authors",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {}
+                                                },
+                                                "nullable": false
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "jwt_token": "token example"
+                    }
+                ]
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
