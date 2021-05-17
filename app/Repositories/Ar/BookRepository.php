@@ -35,4 +35,17 @@ class BookRepository implements BookRepositoryInterface
     {
         return $this->model::find($ids);
     }
+
+    public function create(array $data)
+    {
+        return $this->model::create($data);
+    }
+
+    public function update(int $id, array $data)
+    {
+        $book = $this->model::find($id);
+        $book->fill($data);
+        $book->save();
+        return $book;
+    }
 }

@@ -38,4 +38,13 @@ class BookService extends Service implements BookServiceInterface
     {
         return $this->repository->findAllByIds($ids);
     }
+
+    public function create(array $data) {
+        return $this->repository->create($data);
+    }
+
+    public function update(int $id, array $data)
+    {
+        return $this->repository->update($id, $data);
+    }
 }

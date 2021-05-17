@@ -18,4 +18,9 @@ class AuthorService extends Service implements AuthorServiceInterface
     {
         return $this->repository->create($data);
     }
+
+    public function getAllByIds(array $ids)
+    {
+        return $this->repository->findAllByIds($ids);
+    }
 }

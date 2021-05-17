@@ -28,4 +28,26 @@ class BookAuthorService extends Service implements BookAuthorServiceInterface
         }
         return $bookIds;
     }
+
+    public function create(array $data)
+    {
+        return $this->repository->create($data);
+    }
+
+    public function createMultiple(int $bookId, array $authorIds): array
+    {
+        $bookAuthorArray = [];
+        foreach ($authorIds as $authorId) {
+            $bookAuthorArray[] = $this->create([
+                'book_id' => $bookId,
+                'author_id' => $authorId,
+            ]);
+        }
+        return $bookAuthorArray;
+    }
+
+    public function deleteAllByBookId(int $id)
+    {
+        return $this->repository->deleteAllByBookId($id);
+    }
 }

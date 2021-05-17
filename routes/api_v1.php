@@ -10,5 +10,7 @@ Route::post('auth/me', 'AuthController@me');
 
 Route::get('books', 'BookController@index');
 Route::get('books/{id}', 'BookController@getById');
+Route::post('books', 'BookController@create');
+Route::put('books/{id}', 'BookController@update');
 
 Route::post('authors', 'AuthorController@create');
