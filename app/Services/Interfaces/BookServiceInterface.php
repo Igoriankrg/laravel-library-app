@@ -4,7 +4,7 @@
 namespace App\Services\Interfaces;
 
 
-use App\DTO\Requests\CreateBookRequest;
+use App\DTO\CreateBookDto;
 use App\Repositories\Interfaces\BookRepositoryInterface;
 
 interface BookServiceInterface
@@ -15,6 +15,6 @@ interface BookServiceInterface
     public function getOneById(int $id);
     public function getOneByIdWithAuthors(int $id);
     public function getAllByIds(array $ids);
-    public function create(CreateBookRequest $request);
-    public function update(int $id, CreateBookRequest $request);
+    public function create(CreateBookDto $request);
+    public function update(int $id, CreateBookDto $request);
 }

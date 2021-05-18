@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\DTO\Requests;
+namespace App\DTO;
 
 
-class CreateAuthorRequest
+class CreateBookDto
 {
     protected $name;
 
@@ -13,7 +13,7 @@ class CreateAuthorRequest
         return $this->name;
     }
 
-    public function setName(string $name): CreateAuthorRequest
+    public function setName(string $name): CreateBookDto
     {
         $this->name = $name;
         return $this;

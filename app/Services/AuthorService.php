@@ -4,7 +4,7 @@
 namespace App\Services;
 
 
-use App\DTO\Requests\CreateAuthorRequest;
+use App\DTO\CreateAuthorDto;
 use App\Repositories\Interfaces\AuthorRepositoryInterface;
 use App\Services\Interfaces\AuthorServiceInterface;
 
@@ -15,7 +15,7 @@ class AuthorService extends Service implements AuthorServiceInterface
         $this->repository = $repository;
     }
 
-    public function create(CreateAuthorRequest $request)
+    public function create(CreateAuthorDto $request)
     {
         $data = [
             'name' => $request->getName(),

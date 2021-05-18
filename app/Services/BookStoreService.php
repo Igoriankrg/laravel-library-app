@@ -4,7 +4,7 @@
 namespace App\Services;
 
 
-use App\DTO\Requests\BookStoreRequest;
+use App\DTO\BookStoreDto;
 use App\Repositories\Interfaces\AuthorRepositoryInterface;
 use App\Repositories\Interfaces\BookAuthorRepositoryInterface;
 use App\Repositories\Interfaces\BookRepositoryInterface;
@@ -27,7 +27,7 @@ class BookStoreService implements BookStoreInterface
         $this->authorRepository = $authorRepository;
     }
 
-    public function create(BookStoreRequest $request)
+    public function create(BookStoreDto $request)
     {
         $book = $this->bookRepository->create(['name' => $request->getName()]);
         $this->bookAuthorRepository->createMultiple($book->getAttribute('id'), $request->getAuthors());
@@ -35,7 +35,7 @@ class BookStoreService implements BookStoreInterface
         return $book;
     }
 
-    public function update(int $id, BookStoreRequest $request)
+    public function update(int $id, BookStoreDto $request)
     {
         $book = $this->bookRepository->update($id, ['name' => $request->getName()]);
         $this->bookAuthorRepository->deleteAllByBookId($id);

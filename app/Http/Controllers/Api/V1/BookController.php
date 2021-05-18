@@ -4,10 +4,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 
-use App\DTO\Requests\BookStoreRequest;
+use App\DTO\BookStoreDto;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BookPostRequest;
-use App\Http\Requests\BookPutRequest;
+use App\Http\Requests\BookStoreRequest;
 use App\Services\Interfaces\BookAuthorServiceInterface;
 use App\Services\Interfaces\BookServiceInterface;
 use App\Services\Interfaces\BookStoreInterface;
@@ -207,10 +206,10 @@ class BookController extends Controller
      *         {"jwt_token": "token example"}
      *     }
      * )
-     * @param BookPostRequest $request
+     * @param BookStoreRequest $request
      * @return mixed
      */
-    public function create(BookPostRequest $request)
+    public function create(BookStoreRequest $request)
     {
         $dto = $this->createBookStoreDto($request);
         return $this->bookStoreService->create($dto);
@@ -280,18 +279,18 @@ class BookController extends Controller
      *     }
      * )
      * @param $id
-     * @param BookPutRequest $request
+     * @param BookStoreRequest $request
      * @return mixed
      */
-    public function update($id, BookPutRequest $request)
+    public function update($id, BookStoreRequest $request)
     {
         $dto = $this->createBookStoreDto($request);
         return $this->bookStoreService->update($id, $dto);
     }
 
-    private function createBookStoreDto(\App\Http\Requests\BookStoreRequest $request): BookStoreRequest
+    private function createBookStoreDto(BookStoreRequest $request): BookStoreDto
     {
-        $dto = new BookStoreRequest();
+        $dto = new BookStoreDto();
         $dto->setName($request->post('name'));
         $dto->setAuthors($request->post('authors'));
         return $dto;

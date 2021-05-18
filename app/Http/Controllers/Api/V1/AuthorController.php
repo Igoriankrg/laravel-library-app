@@ -4,9 +4,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 
-use App\DTO\Requests\CreateAuthorRequest;
+use App\DTO\CreateAuthorDto;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AuthorPostRequest;
+use App\Http\Requests\AuthorStoreRequest;
 use App\Services\Interfaces\AuthorServiceInterface;
 
 class AuthorController extends Controller
@@ -62,18 +62,18 @@ class AuthorController extends Controller
      *          {"jwt_token": "token example"}
      *     }
      * )
-     * @param AuthorPostRequest $request
+     * @param AuthorStoreRequest $request
      * @return mixed
      */
-    public function create(AuthorPostRequest $request)
+    public function create(AuthorStoreRequest $request)
     {
         $dto = $this->createAuthorDto($request);
         return $this->authorService->create($dto);
     }
 
-    private function createAuthorDto(AuthorPostRequest $request): CreateAuthorRequest
+    private function createAuthorDto(AuthorStoreRequest $request): CreateAuthorDto
     {
-        $dto = new CreateAuthorRequest();
+        $dto = new CreateAuthorDto();
         $dto->setName($request->post('name'));
         return $dto;
     }

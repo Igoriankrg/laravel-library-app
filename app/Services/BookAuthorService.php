@@ -4,7 +4,7 @@
 namespace App\Services;
 
 
-use App\DTO\Requests\CreateBookAuthorRequest;
+use App\DTO\CreateBookAuthorDto;
 use App\Repositories\Interfaces\BookAuthorRepositoryInterface;
 use App\Services\Interfaces\BookAuthorServiceInterface;
 
@@ -30,7 +30,7 @@ class BookAuthorService extends Service implements BookAuthorServiceInterface
         return $bookIds;
     }
 
-    public function create(CreateBookAuthorRequest $request)
+    public function create(CreateBookAuthorDto $request)
     {
         $data = [
             'book_id' => $request->getBookId(),

@@ -4,10 +4,10 @@
 namespace App\Services\Interfaces;
 
 
-use App\DTO\Requests\BookStoreRequest;
+use App\DTO\BookStoreDto;
 
 interface BookStoreInterface
 {
-    public function create(BookStoreRequest $request);
-    public function update(int $id, BookStoreRequest $request);
+    public function create(BookStoreDto $request);
+    public function update(int $id, BookStoreDto $request);
 }

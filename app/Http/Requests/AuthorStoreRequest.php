@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Foundation\Http\FormRequest;
 
-class BookPostRequest extends BookStoreRequest
+class AuthorStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +24,7 @@ class BookPostRequest extends BookStoreRequest
     public function rules()
     {
         return [
-            'name' =>  'required|max:255',
-            'authors' => 'required|array|min:1',
+            'name' =>  'required|max:255'
         ];
     }
 
@@ -37,7 +37,6 @@ class BookPostRequest extends BookStoreRequest
     {
         return [
             'name.required' => 'A name is required',
-            'authors.required' => 'An authors is required',
         ];
     }
 }

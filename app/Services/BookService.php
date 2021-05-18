@@ -4,7 +4,7 @@
 namespace App\Services;
 
 
-use App\DTO\Requests\CreateBookRequest;
+use App\DTO\CreateBookDto;
 use App\Repositories\Interfaces\BookRepositoryInterface;
 use App\Services\Interfaces\BookServiceInterface;
 
@@ -40,7 +40,7 @@ class BookService extends Service implements BookServiceInterface
         return $this->repository->findAllByIds($ids);
     }
 
-    public function create(CreateBookRequest $request)
+    public function create(CreateBookDto $request)
     {
         $data = [
             'name'=> $request->getName(),
@@ -48,7 +48,7 @@ class BookService extends Service implements BookServiceInterface
         return $this->repository->create($data);
     }
 
-    public function update(int $id, CreateBookRequest $request)
+    public function update(int $id, CreateBookDto $request)
     {
         $data = [
             'name' => $request->getName(),

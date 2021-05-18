@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\DTO\Requests;
+namespace App\DTO;
 
 
-class CreateBookAuthorRequest
+class CreateBookAuthorDto
 {
     protected $bookId;
     protected $authorId;
@@ -19,13 +19,13 @@ class CreateBookAuthorRequest
         return $this->authorId;
     }
 
-    public function setBookId(int $bookId): CreateBookAuthorRequest
+    public function setBookId(int $bookId): CreateBookAuthorDto
     {
         $this->bookId = $bookId;
         return $this;
     }
 
-    public function setAuthorId(int $authorId): CreateBookAuthorRequest
+    public function setAuthorId(int $authorId): CreateBookAuthorDto
     {
         $this->authorId = $authorId;
         return $this;
