@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 
+use App\DTO\Requests\CreateAuthorRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthorPostRequest;
 use App\Services\Interfaces\AuthorServiceInterface;
@@ -66,6 +67,14 @@ class AuthorController extends Controller
      */
     public function create(AuthorPostRequest $request)
     {
-        return $this->authorService->create($request->post());
+        $dto = $this->createAuthorDto($request);
+        return $this->authorService->create($dto);
+    }
+
+    private function createAuthorDto(AuthorPostRequest $request): CreateAuthorRequest
+    {
+        $dto = new CreateAuthorRequest();
+        $dto->setName($request->post('name'));
+        return $dto;
     }
 }

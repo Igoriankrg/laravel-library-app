@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\DTO\Requests\BookStoreRequest;
 use App\Repositories\Interfaces\AuthorRepositoryInterface;
 use App\Repositories\Interfaces\BookAuthorRepositoryInterface;
 use App\Repositories\Interfaces\BookRepositoryInterface;
@@ -26,20 +27,20 @@ class BookStoreService implements BookStoreInterface
         $this->authorRepository = $authorRepository;
     }
 
-    public function create(array $data)
+    public function create(BookStoreRequest $request)
     {
-        $book = $this->bookRepository->create(['name' => $data['name']]);
-        $this->bookAuthorRepository->createMultiple($book->getAttribute('id'), $data['authors']);
-        $book['authors'] = $this->authorRepository->findAllByIds($data['authors']);
+        $book = $this->bookRepository->create(['name' => $request->getName()]);
+        $this->bookAuthorRepository->createMultiple($book->getAttribute('id'), $request->getAuthors());
+        $book['authors'] = $this->authorRepository->findAllByIds($request->getAuthors());
         return $book;
     }
 
-    public function update(int $id, array $data)
+    public function update(int $id, BookStoreRequest $request)
     {
-        $book = $this->bookRepository->update($id, ['name' => $data['name']]);
+        $book = $this->bookRepository->update($id, ['name' => $request->getName()]);
         $this->bookAuthorRepository->deleteAllByBookId($id);
-        $this->bookAuthorRepository->createMultiple($id, $data['authors']);
-        $book['authors'] = $this->authorRepository->findAllByIds($data['authors']);
+        $this->bookAuthorRepository->createMultiple($id, $request->getAuthors());
+        $book['authors'] = $this->authorRepository->findAllByIds($request->getAuthors());
         return $book;
     }
 }

@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\DTO\Requests\CreateBookAuthorRequest;
 use App\Repositories\Interfaces\BookAuthorRepositoryInterface;
 use App\Services\Interfaces\BookAuthorServiceInterface;
 
@@ -19,7 +20,7 @@ class BookAuthorService extends Service implements BookAuthorServiceInterface
         return $this->repository->findAllByAuthorId($id);
     }
 
-    public function getAllBookIdsByAuthorId(int $id)
+    public function getAllBookIdsByAuthorId(int $id): array
     {
         $bookAuthorArray = $this->getAllByAuthorId($id);
         $bookIds = [];
@@ -29,8 +30,12 @@ class BookAuthorService extends Service implements BookAuthorServiceInterface
         return $bookIds;
     }
 
-    public function create(array $data)
+    public function create(CreateBookAuthorRequest $request)
     {
+        $data = [
+            'book_id' => $request->getBookId(),
+            'author_id' => $request->getAuthorId(),
+        ];
         return $this->repository->create($data);
     }
 

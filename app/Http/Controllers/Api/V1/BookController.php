@@ -4,9 +4,11 @@
 namespace App\Http\Controllers\Api\V1;
 
 
+use App\DTO\Requests\BookStoreRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookPostRequest;
 use App\Http\Requests\BookPutRequest;
+use App\Services\Interfaces\BookAuthorServiceInterface;
 use App\Services\Interfaces\BookServiceInterface;
 use App\Services\Interfaces\BookStoreInterface;
 use Illuminate\Http\Request;
@@ -15,20 +17,24 @@ class BookController extends Controller
 {
     protected $bookService;
     protected $bookStoreService;
+    protected $bookAuthorService;
 
     /**
      * Create a new BookController instance.
      *
      * @param BookServiceInterface $bookService
      * @param BookStoreInterface $bookStoreService
+     * @param BookAuthorServiceInterface $bookAuthorService
      */
     public function __construct(
         BookServiceInterface $bookService,
-        BookStoreInterface $bookStoreService
+        BookStoreInterface $bookStoreService,
+        BookAuthorServiceInterface $bookAuthorService
     )
     {
         $this->bookService = $bookService;
         $this->bookStoreService = $bookStoreService;
+        $this->bookAuthorService = $bookAuthorService;
 
         $this->middleware('auth:api', ['except' => ['index', 'getById']]);
     }
@@ -206,7 +212,8 @@ class BookController extends Controller
      */
     public function create(BookPostRequest $request)
     {
-        return $this->bookStoreService->create($request->post());
+        $dto = $this->createBookStoreDto($request);
+        return $this->bookStoreService->create($dto);
     }
 
     /**
@@ -278,6 +285,15 @@ class BookController extends Controller
      */
     public function update($id, BookPutRequest $request)
     {
-        return $this->bookStoreService->update($id, $request->post());
+        $dto = $this->createBookStoreDto($request);
+        return $this->bookStoreService->update($id, $dto);
+    }
+
+    private function createBookStoreDto(\App\Http\Requests\BookStoreRequest $request): BookStoreRequest
+    {
+        $dto = new BookStoreRequest();
+        $dto->setName($request->post('name'));
+        $dto->setAuthors($request->post('authors'));
+        return $dto;
     }
 }
